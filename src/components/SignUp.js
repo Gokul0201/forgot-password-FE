@@ -18,8 +18,10 @@ function SignUp() {
       console.log(values);
       try {
         const register =await axios.post( `${config.api}/register`, values);
-        alert(register.data.message);
-        navigate('/')
+        toast.success(register.data.message);
+        setTimeout(() => {
+          navigate("/")
+      }, 3000)
       } catch (error) {
         console.log(error);
         toast(error.data.message)
@@ -28,6 +30,8 @@ function SignUp() {
   });
   return (
     <div className="container">
+      <Toaster  position="top-right"
+            reverseOrder={false}/>
       <div className="col-lg-12">
         <h2 className="text-center">Register Page</h2>
         <div className="row" style={{marginLeft:"450px", marginTop:"75px"}}>

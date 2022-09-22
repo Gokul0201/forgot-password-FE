@@ -3,6 +3,8 @@ import { useFormik } from "formik";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { config } from "../config";
+import toast,{ Toaster} from 'react-hot-toast'
+// import 'react-toastify/dist/ReactToastify.css';
 
 
 function Login() {
@@ -17,20 +19,25 @@ function Login() {
         console.log(values);
         const user = await axios.post(`${config.api}`, values);
         localStorage.setItem("react_app_token", user.data.token);
-        alert(user.data.message);
+        toast.success(user.data.message);
         if (user.data.message === "Successfully Logged In!!") {
           
           
-            navigate("/dashboard");
+          setTimeout(() => {
+            navigate("/dashboard")
+        }, 3000)
      
         }
       } catch (error) {
         console.log(error);
+        toast.error(error.data.message)
       }
     },
   });
   return (
     <div className="container"> 
+    <Toaster  position="top-right"
+            reverseOrder={false}/>
       <div className="col-lg-12">
       <h2 className="text-center  py-3">Login Page</h2>
         <div className="row" style={{marginLeft:"450px", marginTop:"50px"}}>

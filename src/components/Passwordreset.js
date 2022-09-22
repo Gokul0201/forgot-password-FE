@@ -3,19 +3,27 @@ import { config } from "../config";
 import { useFormik } from "formik";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import toast,{ Toaster} from 'react-hot-toast'
+
+
+
 
 function Passwordreset() {
+  
+
   let formik = useFormik({
     initialValues: {
       email: "",
     },
     onSubmit: async (values) => {
       let user = await axios.post(`${config.api}/resetpassword`, values);
-      alert(user.data.message);
+      toast.success(user.data.message);
     },
   });
   return (
     <div className="container">
+      <Toaster  position="top-right"
+            reverseOrder={false}/>
       <div className="col-lg-12">
         <div className="row" style={{marginTop:"70px"}}>
           <form onSubmit={formik.handleSubmit}>
@@ -41,7 +49,10 @@ function Passwordreset() {
           </form>
         </div>
       </div>
+     
     </div>
+
+    
   );
 }
 

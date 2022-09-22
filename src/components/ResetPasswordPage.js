@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import axios from "axios";
 import { config } from "../config";
 import { useNavigate } from "react-router-dom";
-
+import toast,{ Toaster} from 'react-hot-toast'
 
 function ResetPasswordPage() {
   let navigate = useNavigate()
@@ -15,12 +15,16 @@ function ResetPasswordPage() {
     },
     onSubmit :async (values)=> {
       let user = await axios.post(`${config.api}/reset-password-page`,values);
-      alert(user.data.message);
-      navigate('/')
+      toast.success(user.data.message);
+      setTimeout(() => {
+        navigate("/")
+    }, 3000)
     }
   })
   return (
   <div className="row" style={{marginLeft:"200px",marginTop:"70px"}}>
+     <Toaster  position="top-right"
+            reverseOrder={false}/>
     <form onSubmit={formik.handleSubmit}>
       <div class="col-lg-5">
         <label for="exampleInputEmail1" class="form-label">
